@@ -7,7 +7,6 @@ from scipy.sparse.linalg import eigsh
 import sys
 import re
 
-
 def parse_index_file(filename):
     """Parse index file."""
     index = []
@@ -15,13 +14,11 @@ def parse_index_file(filename):
         index.append(int(line.strip()))
     return index
 
-
 def sample_mask(idx, l):
     """Create mask."""
     mask = np.zeros(l)
     mask[idx] = 1
     return np.array(mask, dtype=np.bool)
-
 
 def load_data(dataset_str):
     """
