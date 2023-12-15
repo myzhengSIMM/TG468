@@ -7,8 +7,6 @@ import sys
 sys.path.append('../')
 from utils.utils import clean_str, loadWord2Vec  
 
-
-
 datasets = ['20ng', 'R8', 'R52', 'ohsumed', 'mr','gs']
 dataset = 'gs' 
 
@@ -30,7 +28,6 @@ doc_content_list = []
 with open('../data/corpus/' + dataset + '.txt', 'rb') as f:
     for line in f.readlines():
         doc_content_list.append(line.strip().decode('latin1'))
-
 
 word_freq = {}  
 
