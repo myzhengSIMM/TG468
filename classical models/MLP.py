@@ -1,9 +1,7 @@
-
 import pandas as pd
 from collections import Counter
 from tqdm import tqdm
 import numpy as np
-
 from sklearn.utils import shuffle
 import torch
 import torch.nn as nn
@@ -12,14 +10,10 @@ import torch.utils.data as Data
 import torch.optim as optim
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_auc_score
-
 import time
 from sklearn.metrics import roc_curve
 import os
-
-
 seed = 100
-
 
 os.environ['PYTHONHASHSEED'] = str(seed)   
 torch.manual_seed(seed)
@@ -31,14 +25,9 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False 
 torch.backends.cudnn.enabled = True
 
-
-    
-    
 train_set = pd.read_csv('../data/train_set.csv')
 train_set = shuffle(train_set)
-
 test_set = pd.read_csv('../data/test_set.csv')
-
 def get_fearures_and_labels(MUTsentence):  
     lines = list(MUTsentence['mutsentence'])
     label = list(MUTsentence['label'])
@@ -62,28 +51,23 @@ def get_fearures_and_labels(MUTsentence):
     Sentence = torch.FloatTensor(Sentence)  
     Sentence.shape
     return Sentence,label
-
+    
 net = nn.Sequential(
             nn.Linear(983, 200), 
             nn.ReLU(), 
             nn.Linear(200, 1),
             nn.Sigmoid(),
             )
-
-   
 def train(net,data_iter,optimizer,device,
           train_features,train_targets,valid_features,valid_labels,num_epochs = 0):
-   
     train_AUC = []
     valid_AUC = []
     train_loss,valid_loss = [],[]
-    
     net = net.to(device)
     train_features = train_features.to(device)
     train_targets = train_targets.to(device)
     valid_features = valid_features.to(device)
     valid_labels = valid_labels.to(device)
-
     loss = nn.BCELoss()
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.8, patience=5, eps=1e-4, verbose=True)
     for epoch in range(num_epochs):
@@ -100,7 +84,6 @@ def train(net,data_iter,optimizer,device,
             train_l_sum += l_batch
             batch_count += 1
         scheduler.step(train_l_sum)
-        
         with torch.no_grad():
             net.eval()
             y_train_hat = net(train_features)
@@ -108,7 +91,6 @@ def train(net,data_iter,optimizer,device,
             train_loss.append(l_train.to('cpu'))
             auc_train = roc_auc_score(train_features.long().to('cpu').view(-1,1),train_targets.view(-1,1).to('cpu'))
             train_AUC.append(auc_train)
-            
             y_valid_hat = net(valid_features)
             l_valid = loss(y_valid_hat,valid_labels)
             valid_loss.append(l_valid.to('cpu'))
@@ -120,28 +102,19 @@ def train(net,data_iter,optimizer,device,
         if epoch > 10 and (valid_loss[-1] > np.mean(valid_loss[-(10+1):-1])):
             break
     return y_train_hat.to('cpu'), y_valid_hat.to('cpu')
-
-
 train_features0,train_labels0 =  get_fearures_and_labels(train_set)
 train_features0.shape
-
 valid_size = round(train_features0.shape[0]*0.8)
-
 train_features = train_features0[:valid_size]
 train_labels = train_labels0[:valid_size]
-
 valid_features = train_features0[valid_size:]
 valid_labels = train_labels0[valid_size:]
-
 test_features,test_labels = get_fearures_and_labels(test_set)      
-
 dataset = Data.TensorDataset(train_features,train_labels)
 data_iter = Data.DataLoader(dataset,batch_size =20, shuffle=True,num_workers=0)
-    
 num_epochs = 1000
 optimizer =  torch.optim.Adam(net.parameters(),lr = 0.00001)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
 
 train_pred,valid_pred = train(net,data_iter,optimizer,device,
                               train_features,train_labels,valid_features,valid_labels,num_epochs)
@@ -160,9 +133,6 @@ def get_roc_coordinatesANDpred(labels_true,prob_pred,data_catalog):
     save_pred['labels'] =  [labels_true[j][0] for j in range(len(labels_true))]
     save_pred['prob'] = [prob_pred[j][0] for j in range(len(prob_pred))]
     save_pred.to_csv('../results/ICI-roc_' + data_catalog + '.csv',index = False)
-
-
 get_roc_coordinatesANDpred(train_labels.numpy(), train_pred.numpy(),'train')  
 get_roc_coordinatesANDpred(valid_labels.numpy(), valid_pred.numpy(),'valid')  
 get_roc_coordinatesANDpred(test_labels.numpy(), test_pred.numpy(),'test')   
-    
