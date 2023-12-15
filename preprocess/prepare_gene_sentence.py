@@ -1,16 +1,12 @@
-
 import pandas as pd
 from collections import Counter
 from tqdm import tqdm
 import numpy as np
 import random
 import os
-
 from sklearn.utils import shuffle
 import sys
-
 sys.path.append('../config') 
-
 from config import CONFIG
 CONFIG = CONFIG()
 
@@ -20,9 +16,7 @@ random.seed(seed0)
 np.random.seed(seed0)
 size = CONFIG.size
 
-
 test_set_name = CONFIG.test_set_name
-
 train_set = pd.read_csv('../data/train_set.csv')
 train_set = shuffle(train_set)
 TRAIN_SIZE = train_set.shape[0]
@@ -39,7 +33,6 @@ Lines = [line.split() for line in lines]
 selected_gene  = pd.read_csv('../data/candidate gene set.csv')
 selected_gene = selected_gene[selected_gene['p_value']<=0.05]
 selected_gene = list(selected_gene['gene_name'])
-
 Sentence = []
 for line in Lines:
     new_sentence = []
