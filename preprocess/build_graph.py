@@ -13,18 +13,14 @@ import sys
 sys.path.append('../')
 from utils.utils import loadWord2Vec, clean_str
 
-
-
 datasets = ['20ng', 'R8', 'R52', 'ohsumed', 'mr','gs']
 dataset = 'gs'
 
 if dataset not in datasets:
 	sys.exit("wrong dataset name")  
 
-
 word_embeddings_dim = 300
 word_vector_map = {}       
-
 
 doc_name_list = []                      
 doc_train_list = []
@@ -50,25 +46,18 @@ train_ids = []
 for train_name in doc_train_list:
     train_id = doc_name_list.index(train_name)
     train_ids.append(train_id)
-
-
 train_ids_str = '\n'.join(str(index) for index in train_ids)
 with open('../data/' + dataset + '.train.index', 'w') as f:
     f.write(train_ids_str)
-
-
 test_ids = []
 for test_name in doc_test_list:
     test_id = doc_name_list.index(test_name)
     test_ids.append(test_id)
-
 test_ids_str = '\n'.join(str(index) for index in test_ids)
 with open('../data/' + dataset + '.test.index', 'w') as f:
     f.write(test_ids_str)
 
-
 ids = train_ids + test_ids
-
 
 shuffle_doc_name_list = []
 shuffle_doc_words_list = []
@@ -84,7 +73,6 @@ with open('../data/' + dataset + '_shuffle.txt', 'w') as f:
 with open('../data/corpus/' + dataset + '_shuffle.txt', 'w') as f:
     f.write(shuffle_doc_words_str)
 
-
 # build vocab
 word_freq = {}
 word_set = []                                       
@@ -97,7 +85,6 @@ for doc_words in shuffle_doc_words_list:
             word_freq[word] += 1
         else:                 
             word_freq[word] = 1
-
 
 vocab = list(word_set)
 vocab_size = len(vocab)
@@ -118,7 +105,6 @@ for i in range(len(shuffle_doc_words_list)):
         else:
             word_doc_list[word] = [i]
         appeared.add(word)
-
 
 word_doc_list
 word_doc_freq = {}
