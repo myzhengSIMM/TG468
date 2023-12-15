@@ -22,5 +22,4 @@ gseaplot2(
   pvalue_table = FALSE,
   ES_geom = "line"
 )
-
 write.table(KEGG_gseresult, file ="KEGG_gseresult.csv", sep =",", row.names =FALSE)
