@@ -11,3 +11,6 @@ ggsurvplot(fit, pval = TRUE,
 
 res_cox = coxph(Surv(time, state) ~ response_pred, data = ICI.data) 
 summary(res_cox)       
+
+res_cox = coxph(Surv(time, state) ~ response_pred + AGE + Gender + TMB, data = ICI.data)
+summary(res_cox)   
