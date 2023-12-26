@@ -7,6 +7,7 @@ library(clusterProfiler)
 library(biomaRt)
 library(enrichplot)  
 
+
 KEGG_gseresult <- gseKEGG(geneList,  
                           organism = 'hsa',
                           nPerm = 1000, 
