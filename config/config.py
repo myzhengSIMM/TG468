@@ -5,7 +5,7 @@ class CONFIG(object):
         super(CONFIG, self).__init__()
         self.dataset = 'gs'
         self.model = 'gcn'  
-        self.learning_rate = 0.05  
+        self.learning_rate = 0.0005  
         self.epochs  = 1000                    
         self.hidden1 = 200 
         self.dropout = 0.0  
