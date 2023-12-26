@@ -55,6 +55,7 @@ class GCN(nn.Module):
         super(GCN, self).__init__()
         self.layer1 = GraphConvolution(input_dim, 200, support, act_func=nn.ReLU(), featureless=True, dropout_rate=dropout_rate)
         self.layer2= GraphConvolution(200, 1, support, act_func=nn.Sigmoid(),dropout_rate=dropout_rate)    
+                            
     def forward(self, x):
         out = self.layer1(x)
         out = self.layer2(out)
