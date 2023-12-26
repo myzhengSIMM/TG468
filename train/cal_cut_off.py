@@ -49,3 +49,5 @@ npv,ppv = round(TN/(FN+TN),2),round(TP/(TP+FP),2)
 print('sensitivuty,specificity = ',sensitivuty,specificity)
 print('Accuracy = ', (TP + TN)/(TN+FP+FN+TP))     
 print('ppv,npv = ',ppv,npv)   
+
+
