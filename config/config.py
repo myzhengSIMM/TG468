@@ -10,8 +10,8 @@ class CONFIG(object):
         self.hidden1 = 200 
         self.dropout = 0.0  
         self.early_stopping = 10  
-        self.seed0 = 184  
-        self.seed = 72    
+        self.seed0 = 190  
+        self.seed = 139    
         self.size = 468
         self.test_set_name = 'Hellmann'
                         
@@ -26,9 +26,9 @@ class CONFIG(object):
 #         self.epochs  = 1000          
 #         self.hidden1 = 200  
 #         self.dropout = 0.0  
-#         self.early_stopping = 10 
-#         self.seed0 = 184  
-#         self.seed =  72   
+#         self.early_stopping = 100 
+#         self.seed0 = 42  
+#         self.seed =  59   
 #         self.size = 468
 #         self.test_set_name = 'Liu'
 
@@ -130,7 +130,7 @@ class CONFIG(object):
 #         self.dropout = 0.0 
 #         self.early_stopping = 10 
 #         self.seed0 = 184
-#         self.seed = 72
+#         self.seed = 77
 #         self.size = 468
 #         self.test_set_name = 'TCGA-SKCM'     
         
@@ -162,7 +162,7 @@ class CONFIG(object):
 #         self.epochs  = 1000
 #         self.hidden1 = 200  
 #         self.dropout = 0.0  
-#         self.early_stopping = 20 
+#         self.early_stopping = 10 
 #         self.seed0 = 184
 #         self.seed = 72                          
 #         self.size = 468
