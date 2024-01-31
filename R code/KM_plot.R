@@ -14,3 +14,4 @@ summary(res_cox)
 
 res_cox = coxph(Surv(time, state) ~ response_pred + AGE + Gender + TMB, data = ICI.data)
 summary(res_cox)   
+# AGE cutoff is 65 years old; TMB cutoff is 10 mut/Mb
